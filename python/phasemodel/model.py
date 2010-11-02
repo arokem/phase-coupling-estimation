@@ -37,7 +37,7 @@ else:
     raise ImportError("Either cython or weave required")
 
 #
-# pretty printing of matices/arrays
+# pretty printing of matrices/arrays
 # printing precision (number of digits)
 #
 np.set_printoptions(linewidth=195,precision=4)

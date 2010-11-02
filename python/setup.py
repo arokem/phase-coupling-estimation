@@ -1,42 +1,40 @@
 #!/usr/bin/env python
-from os.path import join
+"""Setup for phase-coupling-estimation package """
+import os
+
+# BEFORE importing distutils, remove MANIFEST. distutils doesn't properly
+# update it when the contents of directories change.
+if os.path.exists('MANIFEST'): os.remove('MANIFEST')
+
+from distutils.core import setup
+
+# Get version and release info, which is all stored in nitime/version.py
+ver_file = os.path.join('phasemodel', 'version.py')
+execfile(ver_file)
+
+opts = dict(name=NAME,
+            maintainer=MAINTAINER,
+            maintainer_email=MAINTAINER_EMAIL,
+            description=DESCRIPTION,
+            long_description=LONG_DESCRIPTION,
+            url=URL,
+            download_url=DOWNLOAD_URL,
+            license=LICENSE,
+            classifiers=CLASSIFIERS,
+            author=AUTHOR,
+            author_email=AUTHOR_EMAIL,
+            platforms=PLATFORMS,
+            version=VERSION,
+            packages=PACKAGES,
+            requires=REQUIRES,
+            )
+
+# Only add setuptools-specific flags if the user called for setuptools, but
+# otherwise leave it alone
 import sys
+if 'setuptools' in sys.modules:
+    opts['zip_safe'] = False
 
-from phasemodel import  __version__, __doc__
-
-def configuration(parent_package='',top_path=None):
-    from numpy.distutils.misc_util import Configuration
-
-    config = Configuration(None, parent_package, top_path)
-    config.set_options(ignore_setup_xxx_py=True,
-                       assume_default_configuration=True,
-                       delegate_options_to_subpackages=True,
-                       quiet=True)
-    # The quiet=True option will silence all of the name setting warnings:
-    # Ignoring attempt to set 'name' (from 'phasemodel.core' to 
-    #    'phasemodel.core.image')
-    # Robert Kern recommends setting quiet=True on the numpy list, stating
-    # these messages are probably only used in debugging numpy distutils.
-
-    config.get_version('phasemodel/version.py') # sets config.version
-
-    config.add_subpackage('phasemodel', 'phasemodel')
-
-    return config
-
-
-def main():
-    from numpy.distutils.core import setup
-    
-    setup( name = 'phasemodel',
-           description = 'Phase Coupling Estimation from Multivariate Phase Statistics.',
-           author = 'Charles Cadieu, Kilian Koepsell',
-           author_email = 'cadieu@berkeley.edu, kilian@berkeley.edu',
-           url = 'http://redwood.berkeley.edu/',
-           zip_safe = False,
-           long_description = __doc__,
-           configuration = configuration)
-
-
-if __name__ == "__main__":
-    main()
+# Now call the actual setup function
+if __name__ == '__main__':
+    setup(**opts)

@@ -17,7 +17,7 @@ have all of these things at their fingertips.
 
 __docformat__ = 'restructuredtext'
 
-from version import version as __version__
+from version import __version__
 __status__   = 'alpha'
 __url__     = 'http://redwood.berkeley.edu'
 
@@ -38,7 +38,7 @@ if __use_weave__:
         from scipy import weave
         weave.inline('printf("weave works!\n"')
     except:
-        print "WARNING: Coul not load weave"
+        print "WARNING: Could not load weave"
         __use_weave__ = False
 
 __use_R__ = True
